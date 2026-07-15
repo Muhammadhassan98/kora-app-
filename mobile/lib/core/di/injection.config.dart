@@ -69,6 +69,23 @@ import '../../features/prediction/domain/usecases/purchase_item_usecase.dart'
 import '../../features/prediction/presentation/bloc/economy_bloc.dart' as _i912;
 import '../../features/prediction/presentation/bloc/prediction_bloc.dart'
     as _i1013;
+import '../../features/social/data/datasources/social_remote_data_source.dart'
+    as _i744;
+import '../../features/social/data/repositories/social_repository_impl.dart'
+    as _i5;
+import '../../features/social/domain/repositories/social_repository.dart'
+    as _i640;
+import '../../features/social/domain/usecases/create_post_usecase.dart'
+    as _i279;
+import '../../features/social/domain/usecases/get_chat_messages_usecase.dart'
+    as _i314;
+import '../../features/social/domain/usecases/get_communities_usecase.dart'
+    as _i139;
+import '../../features/social/domain/usecases/get_posts_usecase.dart' as _i206;
+import '../../features/social/domain/usecases/like_post_usecase.dart' as _i456;
+import '../../features/social/domain/usecases/send_chat_message_usecase.dart'
+    as _i115;
+import '../../features/social/presentation/bloc/social_bloc.dart' as _i17;
 import '../network/api_client.dart' as _i557;
 import '../storage/local_storage.dart' as _i329;
 import 'app_module.dart' as _i460;
@@ -97,6 +114,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1019.PredictionsRepository>(() =>
         _i707.PredictionsRepositoryImpl(
             gh<_i935.PredictionsRemoteDataSource>()));
+    gh.lazySingleton<_i744.SocialRemoteDataSource>(
+        () => _i744.SocialRemoteDataSourceImpl(gh<_i557.ApiClient>()));
     gh.lazySingleton<_i192.MatchesRemoteDataSource>(
         () => _i192.MatchesRemoteDataSourceImpl(gh<_i557.ApiClient>()));
     gh.lazySingleton<_i1057.EconomyRemoteDataSource>(
@@ -122,8 +141,22 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i209.UpdateSquadUseCase(gh<_i63.FantasyRepository>()));
     gh.lazySingleton<_i806.GetPlayersUseCase>(
         () => _i806.GetPlayersUseCase(gh<_i63.FantasyRepository>()));
+    gh.lazySingleton<_i640.SocialRepository>(
+        () => _i5.SocialRepositoryImpl(gh<_i744.SocialRemoteDataSource>()));
     gh.lazySingleton<_i211.MatchesRepository>(
         () => _i613.MatchesRepositoryImpl(gh<_i192.MatchesRemoteDataSource>()));
+    gh.lazySingleton<_i139.GetCommunitiesUseCase>(
+        () => _i139.GetCommunitiesUseCase(gh<_i640.SocialRepository>()));
+    gh.lazySingleton<_i115.SendChatMessageUseCase>(
+        () => _i115.SendChatMessageUseCase(gh<_i640.SocialRepository>()));
+    gh.lazySingleton<_i279.CreatePostUseCase>(
+        () => _i279.CreatePostUseCase(gh<_i640.SocialRepository>()));
+    gh.lazySingleton<_i456.LikePostUseCase>(
+        () => _i456.LikePostUseCase(gh<_i640.SocialRepository>()));
+    gh.lazySingleton<_i314.GetChatMessagesUseCase>(
+        () => _i314.GetChatMessagesUseCase(gh<_i640.SocialRepository>()));
+    gh.lazySingleton<_i206.GetPostsUseCase>(
+        () => _i206.GetPostsUseCase(gh<_i640.SocialRepository>()));
     gh.factory<_i941.RegisterUseCase>(
         () => _i941.RegisterUseCase(gh<_i787.AuthRepository>()));
     gh.factory<_i188.LoginUseCase>(
@@ -147,6 +180,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i630.PurchaseItemUseCase(gh<_i366.EconomyRepository>()));
     gh.lazySingleton<_i312.ClaimAdRewardUseCase>(
         () => _i312.ClaimAdRewardUseCase(gh<_i366.EconomyRepository>()));
+    gh.factory<_i17.SocialBloc>(() => _i17.SocialBloc(
+          getPostsUseCase: gh<_i206.GetPostsUseCase>(),
+          createPostUseCase: gh<_i279.CreatePostUseCase>(),
+          likePostUseCase: gh<_i456.LikePostUseCase>(),
+          getCommunitiesUseCase: gh<_i139.GetCommunitiesUseCase>(),
+          getChatMessagesUseCase: gh<_i314.GetChatMessagesUseCase>(),
+          sendChatMessageUseCase: gh<_i115.SendChatMessageUseCase>(),
+        ));
     gh.factory<_i1059.MatchesBloc>(
         () => _i1059.MatchesBloc(gh<_i1031.GetMatchesUseCase>()));
     gh.factory<_i912.EconomyBloc>(() => _i912.EconomyBloc(

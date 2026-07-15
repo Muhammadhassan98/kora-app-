@@ -102,3 +102,46 @@ model SquadPlayer {
   isViceCaptain  Boolean      @default(false)
   isBench        Boolean      @default(false)
 }
+
+model Post {
+  id         String    @id @default(uuid())
+  userId     String
+  username   String
+  avatarUrl  String?
+  content    String
+  likesCount Int       @default(0)
+  createdAt  DateTime  @default(now())
+  comments   Comment[]
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  username  String
+  avatarUrl String?
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model Community {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  avatarUrl   String?
+  memberCount Int      @default(0)
+  symbol      String?
+  createdAt   DateTime @default(now())
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  roomId    String
+  userId    String
+  username  String
+  avatarUrl String?
+  content   String
+  isVip     Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

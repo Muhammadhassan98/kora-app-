@@ -13,6 +13,8 @@ import '../../features/prediction/presentation/pages/leaderboard_page.dart';
 import '../../features/prediction/presentation/pages/rewards_page.dart';
 import '../../features/auth/presentation/pages/onboarding_interests_page.dart';
 import '../../features/auth/presentation/pages/onboarding_clubs_page.dart';
+import '../../features/social/presentation/pages/social_feed_page.dart';
+import '../../features/social/presentation/pages/chat_page.dart';
 import '../localization/app_localizations.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -91,6 +93,21 @@ class AppRouter {
             path: '/rewards',
             builder: (context, state) => const RewardsPage(),
           ),
+          GoRoute(
+            path: '/social',
+            builder: (context, state) => const SocialFeedPage(),
+          ),
+          GoRoute(
+            path: '/chat',
+            builder: (context, state) {
+              final roomId = state.uri.queryParameters['roomId'] ?? 'general';
+              final title = state.uri.queryParameters['title'] ?? 'دردشة الجماهير';
+              return ChatPage(
+                roomId: roomId,
+                title: Uri.decodeComponent(title),
+              );
+            },
+          ),
         ],
       ),
     ],
@@ -108,7 +125,7 @@ class MainShell extends StatelessWidget {
     if (location.startsWith('/squad')) return 1;
     if (location.startsWith('/transfers')) return 2;
     if (location.startsWith('/leaderboard')) return 3;
-    if (location.startsWith('/live')) return 4;
+    if (location.startsWith('/social')) return 4;
     return 0;
   }
 
@@ -127,7 +144,7 @@ class MainShell extends StatelessWidget {
         context.go('/leaderboard');
         break;
       case 4:
-        context.go('/live');
+        context.go('/social');
         break;
     }
   }
@@ -142,6 +159,7 @@ class MainShell extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: (index) => _onItemTapped(index, context),
+        type: BottomNavigationBarType.fixed, // ensure all 5 items display titles
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.home),
@@ -160,8 +178,8 @@ class MainShell extends StatelessWidget {
             label: localizations?.translate('leaderboard') ?? 'Leaderboard',
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.live_tv),
-            label: localizations?.translate('live') ?? 'Live',
+            icon: const Icon(Icons.people_alt),
+            label: 'الساحة',
           ),
         ],
       ),

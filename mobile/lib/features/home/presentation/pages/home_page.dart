@@ -198,9 +198,16 @@ class _HomePageState extends State<HomePage> {
                         color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                       ),
                     ),
+                    TextButton(
+                      onPressed: () => context.push('/live'),
+                      child: Text(
+                        'جدول المباريات 🗓️',
+                        style: AppTextStyles.bodySmall.bold.copyWith(color: AppColors.primary),
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 12.0),
+                const SizedBox(height: 4.0),
 
                 // Matches list
                 BlocBuilder<MatchesBloc, MatchesState>(
