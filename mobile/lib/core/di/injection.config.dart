@@ -22,6 +22,18 @@ import '../../features/auth/domain/usecases/register_usecase.dart' as _i941;
 import '../../features/auth/domain/usecases/send_otp_usecase.dart' as _i663;
 import '../../features/auth/domain/usecases/verify_otp_usecase.dart' as _i503;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
+import '../../features/fantasy/data/datasources/fantasy_remote_data_source.dart'
+    as _i336;
+import '../../features/fantasy/data/repositories/fantasy_repository_impl.dart'
+    as _i269;
+import '../../features/fantasy/domain/repositories/fantasy_repository.dart'
+    as _i63;
+import '../../features/fantasy/domain/usecases/get_players_usecase.dart'
+    as _i806;
+import '../../features/fantasy/domain/usecases/get_squad_usecase.dart' as _i658;
+import '../../features/fantasy/domain/usecases/update_squad_usecase.dart'
+    as _i209;
+import '../../features/fantasy/presentation/bloc/fantasy_bloc.dart' as _i514;
 import '../../features/home/data/datasources/matches_remote_data_source.dart'
     as _i192;
 import '../../features/home/data/repositories/matches_repository_impl.dart'
@@ -63,6 +75,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
     gh.lazySingleton<_i557.ApiClient>(() => appModule.apiClient);
     gh.lazySingleton<_i329.LocalStorage>(() => appModule.localStorage);
+    gh.lazySingleton<_i336.FantasyRemoteDataSource>(
+        () => _i336.FantasyRemoteDataSourceImpl(gh<_i557.ApiClient>()));
     gh.lazySingleton<_i107.AuthRemoteDataSource>(
         () => _i107.AuthRemoteDataSourceImpl(gh<_i557.ApiClient>()));
     gh.lazySingleton<_i935.PredictionsRemoteDataSource>(
@@ -74,6 +88,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i192.MatchesRemoteDataSourceImpl(gh<_i557.ApiClient>()));
     gh.lazySingleton<_i787.AuthRepository>(
         () => _i153.AuthRepositoryImpl(gh<_i107.AuthRemoteDataSource>()));
+    gh.lazySingleton<_i63.FantasyRepository>(
+        () => _i269.FantasyRepositoryImpl(gh<_i336.FantasyRemoteDataSource>()));
     gh.lazySingleton<_i508.GetMyPredictionsUseCase>(() =>
         _i508.GetMyPredictionsUseCase(gh<_i1019.PredictionsRepository>()));
     gh.lazySingleton<_i777.GetLeaderboardUseCase>(
@@ -85,6 +101,12 @@ extension GetItInjectableX on _i174.GetIt {
           getMyPredictionsUseCase: gh<_i508.GetMyPredictionsUseCase>(),
           getLeaderboardUseCase: gh<_i777.GetLeaderboardUseCase>(),
         ));
+    gh.lazySingleton<_i658.GetSquadUseCase>(
+        () => _i658.GetSquadUseCase(gh<_i63.FantasyRepository>()));
+    gh.lazySingleton<_i209.UpdateSquadUseCase>(
+        () => _i209.UpdateSquadUseCase(gh<_i63.FantasyRepository>()));
+    gh.lazySingleton<_i806.GetPlayersUseCase>(
+        () => _i806.GetPlayersUseCase(gh<_i63.FantasyRepository>()));
     gh.lazySingleton<_i211.MatchesRepository>(
         () => _i613.MatchesRepositoryImpl(gh<_i192.MatchesRemoteDataSource>()));
     gh.factory<_i941.RegisterUseCase>(
@@ -97,6 +119,11 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i503.VerifyOtpUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i1031.GetMatchesUseCase>(
         () => _i1031.GetMatchesUseCase(gh<_i211.MatchesRepository>()));
+    gh.factory<_i514.FantasyBloc>(() => _i514.FantasyBloc(
+          getPlayersUseCase: gh<_i806.GetPlayersUseCase>(),
+          getSquadUseCase: gh<_i658.GetSquadUseCase>(),
+          updateSquadUseCase: gh<_i209.UpdateSquadUseCase>(),
+        ));
     gh.factory<_i1059.MatchesBloc>(
         () => _i1059.MatchesBloc(gh<_i1031.GetMatchesUseCase>()));
     gh.factory<_i797.AuthBloc>(() => _i797.AuthBloc(

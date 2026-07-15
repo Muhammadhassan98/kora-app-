@@ -67,6 +67,7 @@ model FantasySquad {
   budget           Float    @default(100.0)
   totalPoints      Int      @default(0)
   gameweekPoints   Int      @default(0)
+  players          SquadPlayer[]
   createdAt        DateTime @default(now())
 }
 
@@ -78,4 +79,26 @@ model CoinTransaction {
   transactionType String   // 'purchase', 'ad_reward', 'store_buy', 'gift'
   description     String?
   createdAt       DateTime @default(now())
+}
+
+model Player {
+  id        String   @id @default(uuid())
+  name      String
+  position  String   // 'GKP', 'DEF', 'MID', 'FWD'
+  price     Float    // e.g. 12.0 for 12M
+  points    Int      @default(0)
+  club      String
+  logo      String?
+  squads    SquadPlayer[]
+}
+
+model SquadPlayer {
+  id             String       @id @default(uuid())
+  fantasySquadId String
+  fantasySquad   FantasySquad @relation(fields: [fantasySquadId], references: [id], onDelete: Cascade)
+  playerId       String
+  player         Player       @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  isCaptain      Boolean      @default(false)
+  isViceCaptain  Boolean      @default(false)
+  isBench        Boolean      @default(false)
 }
