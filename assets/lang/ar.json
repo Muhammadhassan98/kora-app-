@@ -1,0 +1,15 @@
+{
+  "app_name": "فانتكورا",
+  "welcome_back": "مرحباً، {name}",
+  "home": "الرئيسية",
+  "my_squad": "تشكيلتي",
+  "transfers": "الانتقالات",
+  "leaderboard": "الترتيب",
+  "live": "مباشر",
+  "budget": "الميزانية",
+  "points": "النقاط",
+  "deadline": "الحد الأقصى",
+  "gameweek": "الجولة {number}",
+  "search_player": "ابحث عن لاعب...",
+  "save_squad": "حفظ التشكيلة"
+}

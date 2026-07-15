@@ -1,0 +1,15 @@
+{
+  "app_name": "FantKora",
+  "welcome_back": "Welcome back, {name}",
+  "home": "Home",
+  "my_squad": "My Squad",
+  "transfers": "Transfers",
+  "leaderboard": "Leaderboard",
+  "live": "Live",
+  "budget": "Budget",
+  "points": "Points",
+  "deadline": "Deadline",
+  "gameweek": "Gameweek {number}",
+  "search_player": "Search player...",
+  "save_squad": "Save Squad"
+}
