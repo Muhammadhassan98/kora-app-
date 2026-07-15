@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String             @id @default(uuid())
+  email        String?            @unique
+  phoneNumber  String?            @unique
+  passwordHash String
+  role         String             @default("user")
+  isVerified   Boolean            @default(false)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  profile      Profile?
+  predictions  Prediction[]
+  squads       FantasySquad[]
+  transactions CoinTransaction[]
+}
+
+model Profile {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  username     String   @unique
+  avatarUrl    String?
+  coinsBalance Int      @default(0)
+  xpPoints     Int      @default(0)
+  level        Int      @default(1)
+  favoriteClub String?
+  createdAt    DateTime @default(now())
+}
+
+model VerificationCode {
+  id        String   @id @default(uuid())
+  target    String   @unique
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Prediction {
+  id                  String   @id @default(uuid())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  matchId             String
+  predictedWinner     String   // 'home', 'away', 'draw'
+  predictedHomeScore  Int
+  predictedAwayScore  Int
+  pointsEarned        Int      @default(0)
+  isProcessed         Boolean  @default(false)
+  createdAt           DateTime @default(now())
+}
+
+model FantasySquad {
+  id               String   @id @default(uuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  budget           Float    @default(100.0)
+  totalPoints      Int      @default(0)
+  gameweekPoints   Int      @default(0)
+  createdAt        DateTime @default(now())
+}
+
+model CoinTransaction {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount          Int      // positive for earn, negative for spend
+  transactionType String   // 'purchase', 'ad_reward', 'store_buy', 'gift'
+  description     String?
+  createdAt       DateTime @default(now())
+}

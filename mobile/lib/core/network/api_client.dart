@@ -5,7 +5,7 @@ class ApiClient {
 
   ApiClient(this._dio) {
     _dio.options = BaseOptions(
-      baseUrl: 'https://api.fantkora.com/v1/', // Place holder base URL
+      baseUrl: 'http://localhost:3000/api/v1/', // Local NestJS dev server URL
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       headers: {

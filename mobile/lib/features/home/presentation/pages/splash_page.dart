@@ -9,7 +9,7 @@ class SplashPage extends StatelessWidget {
     // Navigate to Auth after a delay
     Future.delayed(const Duration(seconds: 2), () {
       if (context.mounted) {
-        context.go('/auth');
+        context.go('/login');
       }
     });
 
