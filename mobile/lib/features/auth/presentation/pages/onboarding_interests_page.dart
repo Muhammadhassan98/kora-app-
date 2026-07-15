@@ -65,7 +65,13 @@ class _OnboardingInterestsPageState extends State<OnboardingInterestsPage> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: isDark ? Colors.white : Colors.black),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            } else {
+              context.go('/onboarding');
+            }
+          },
         ),
       ),
       body: SafeArea(

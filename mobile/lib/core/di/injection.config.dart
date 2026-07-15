@@ -42,18 +42,31 @@ import '../../features/home/domain/repositories/matches_repository.dart'
     as _i211;
 import '../../features/home/domain/usecases/get_matches_usecase.dart' as _i1031;
 import '../../features/home/presentation/bloc/matches_bloc.dart' as _i1059;
+import '../../features/prediction/data/datasources/economy_remote_data_source.dart'
+    as _i1057;
 import '../../features/prediction/data/datasources/predictions_remote_data_source.dart'
     as _i935;
+import '../../features/prediction/data/repositories/economy_repository_impl.dart'
+    as _i641;
 import '../../features/prediction/data/repositories/predictions_repository_impl.dart'
     as _i707;
+import '../../features/prediction/domain/repositories/economy_repository.dart'
+    as _i366;
 import '../../features/prediction/domain/repositories/predictions_repository.dart'
     as _i1019;
+import '../../features/prediction/domain/usecases/claim_ad_reward_usecase.dart'
+    as _i312;
 import '../../features/prediction/domain/usecases/create_prediction_usecase.dart'
     as _i798;
 import '../../features/prediction/domain/usecases/get_leaderboard_usecase.dart'
     as _i777;
 import '../../features/prediction/domain/usecases/get_my_predictions_usecase.dart'
     as _i508;
+import '../../features/prediction/domain/usecases/get_transactions_usecase.dart'
+    as _i505;
+import '../../features/prediction/domain/usecases/purchase_item_usecase.dart'
+    as _i630;
+import '../../features/prediction/presentation/bloc/economy_bloc.dart' as _i912;
 import '../../features/prediction/presentation/bloc/prediction_bloc.dart'
     as _i1013;
 import '../network/api_client.dart' as _i557;
@@ -86,6 +99,8 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i935.PredictionsRemoteDataSource>()));
     gh.lazySingleton<_i192.MatchesRemoteDataSource>(
         () => _i192.MatchesRemoteDataSourceImpl(gh<_i557.ApiClient>()));
+    gh.lazySingleton<_i1057.EconomyRemoteDataSource>(
+        () => _i1057.EconomyRemoteDataSourceImpl(gh<_i557.ApiClient>()));
     gh.lazySingleton<_i787.AuthRepository>(
         () => _i153.AuthRepositoryImpl(gh<_i107.AuthRemoteDataSource>()));
     gh.lazySingleton<_i63.FantasyRepository>(
@@ -124,8 +139,21 @@ extension GetItInjectableX on _i174.GetIt {
           getSquadUseCase: gh<_i658.GetSquadUseCase>(),
           updateSquadUseCase: gh<_i209.UpdateSquadUseCase>(),
         ));
+    gh.lazySingleton<_i366.EconomyRepository>(() =>
+        _i641.EconomyRepositoryImpl(gh<_i1057.EconomyRemoteDataSource>()));
+    gh.lazySingleton<_i505.GetTransactionsUseCase>(
+        () => _i505.GetTransactionsUseCase(gh<_i366.EconomyRepository>()));
+    gh.lazySingleton<_i630.PurchaseItemUseCase>(
+        () => _i630.PurchaseItemUseCase(gh<_i366.EconomyRepository>()));
+    gh.lazySingleton<_i312.ClaimAdRewardUseCase>(
+        () => _i312.ClaimAdRewardUseCase(gh<_i366.EconomyRepository>()));
     gh.factory<_i1059.MatchesBloc>(
         () => _i1059.MatchesBloc(gh<_i1031.GetMatchesUseCase>()));
+    gh.factory<_i912.EconomyBloc>(() => _i912.EconomyBloc(
+          getTransactionsUseCase: gh<_i505.GetTransactionsUseCase>(),
+          claimAdRewardUseCase: gh<_i312.ClaimAdRewardUseCase>(),
+          purchaseItemUseCase: gh<_i630.PurchaseItemUseCase>(),
+        ));
     gh.factory<_i797.AuthBloc>(() => _i797.AuthBloc(
           registerUseCase: gh<_i941.RegisterUseCase>(),
           loginUseCase: gh<_i188.LoginUseCase>(),

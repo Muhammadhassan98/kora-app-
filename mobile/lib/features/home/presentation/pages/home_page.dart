@@ -22,11 +22,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isGuest = false;
+  int _coinsBalance = 150;
 
   @override
   void initState() {
     super.initState();
     _checkGuestStatus();
+    _loadCoinsBalance();
+  }
+
+  Future<void> _loadCoinsBalance() async {
+    final localStorage = LocalStorage();
+    final coins = await localStorage.read<int>('profile', 'coins') ?? 150;
+    if (mounted) {
+      setState(() {
+        _coinsBalance = coins;
+      });
+    }
   }
 
   Future<void> _checkGuestStatus() async {
@@ -85,27 +97,33 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             // Level badge & Coins balance
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              decoration: BoxDecoration(
-                color: Colors.amber.withAlpha(30),
-                borderRadius: BorderRadius.circular(20.0),
-                border: Border.all(color: Colors.amber.withAlpha(100)),
-              ),
-              child: const Row(
-                children: [
-                  Icon(Icons.monetization_on, color: Colors.amber, size: 18.0),
-                  SizedBox(width: 4.0),
-                  Text(
-                    '150',
-                    style: TextStyle(
-                      color: Colors.amber,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.0,
+            GestureDetector(
+              onTap: () async {
+                await context.push('/rewards');
+                _loadCoinsBalance();
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                decoration: BoxDecoration(
+                  color: Colors.amber.withAlpha(30),
+                  borderRadius: BorderRadius.circular(20.0),
+                  border: Border.all(color: Colors.amber.withAlpha(100)),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.monetization_on, color: Colors.amber, size: 18.0),
+                    const SizedBox(width: 4.0),
+                    Text(
+                      '$_coinsBalance',
+                      style: const TextStyle(
+                        color: Colors.amber,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.0,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Container(

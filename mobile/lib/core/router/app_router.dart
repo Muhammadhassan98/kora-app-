@@ -10,6 +10,7 @@ import '../../features/home/presentation/pages/live_page.dart';
 import '../../features/fantasy/presentation/pages/squad_page.dart';
 import '../../features/fantasy/presentation/pages/transfers_page.dart';
 import '../../features/prediction/presentation/pages/leaderboard_page.dart';
+import '../../features/prediction/presentation/pages/rewards_page.dart';
 import '../../features/auth/presentation/pages/onboarding_interests_page.dart';
 import '../../features/auth/presentation/pages/onboarding_clubs_page.dart';
 import '../localization/app_localizations.dart';
@@ -85,6 +86,10 @@ class AppRouter {
           GoRoute(
             path: '/live',
             builder: (context, state) => const LivePage(),
+          ),
+          GoRoute(
+            path: '/rewards',
+            builder: (context, state) => const RewardsPage(),
           ),
         ],
       ),
