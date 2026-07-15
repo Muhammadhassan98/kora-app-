@@ -73,7 +73,9 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context, state) {
           return Scaffold(
             backgroundColor: isDark ? AppColors.bgDark : AppColors.bgLight,
-            body: Stack(
+            body: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Stack(
               children: [
                 // Background Gradient
                 Positioned.fill(
@@ -289,7 +291,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
             ),
-          );
+          ),
+        );
         },
       ),
     );

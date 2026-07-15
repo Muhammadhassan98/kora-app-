@@ -99,7 +99,9 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             body: SafeArea(
-              child: SingleChildScrollView(
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
                 child: Form(
                   key: _formKey,
@@ -320,7 +322,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
               ),
-            ),
+            ),),
           );
         },
       ),
