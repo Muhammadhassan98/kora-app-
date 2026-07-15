@@ -10,6 +10,8 @@ import '../../features/home/presentation/pages/live_page.dart';
 import '../../features/fantasy/presentation/pages/squad_page.dart';
 import '../../features/fantasy/presentation/pages/transfers_page.dart';
 import '../../features/prediction/presentation/pages/leaderboard_page.dart';
+import '../../features/auth/presentation/pages/onboarding_interests_page.dart';
+import '../../features/auth/presentation/pages/onboarding_clubs_page.dart';
 import '../localization/app_localizations.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -42,6 +44,21 @@ class AppRouter {
       GoRoute(
         path: '/onboarding',
         builder: (context, state) => const OnboardingPage(),
+      ),
+      GoRoute(
+        path: '/onboarding/interests',
+        builder: (context, state) {
+          final mode = state.uri.queryParameters['mode'];
+          return OnboardingInterestsPage(mode: mode);
+        },
+      ),
+      GoRoute(
+        path: '/onboarding/clubs',
+        builder: (context, state) {
+          final mode = state.uri.queryParameters['mode'];
+          final interests = state.uri.queryParameters['interests'];
+          return OnboardingClubsPage(mode: mode, interests: interests);
+        },
       ),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,

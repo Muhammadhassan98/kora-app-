@@ -15,12 +15,16 @@ class RegisterUseCase {
     String? phoneNumber,
     required String password,
     required String username,
+    String? favoriteClub,
+    String? interests,
   }) {
     return repository.register(
       email: email,
       phoneNumber: phoneNumber,
       password: password,
       username: username,
+      favoriteClub: favoriteClub,
+      interests: interests,
     );
   }
 }

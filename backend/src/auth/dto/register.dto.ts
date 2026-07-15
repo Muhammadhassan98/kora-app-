@@ -15,4 +15,12 @@ export class RegisterDto {
 
   @IsString()
   username: string;
+
+  @IsString()
+  @IsOptional()
+  favoriteClub?: string;
+
+  @IsString()
+  @IsOptional()
+  interests?: string;
 }

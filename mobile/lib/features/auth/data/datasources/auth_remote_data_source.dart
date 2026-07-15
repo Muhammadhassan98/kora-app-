@@ -11,6 +11,8 @@ abstract class AuthRemoteDataSource {
     String? phoneNumber,
     required String password,
     required String username,
+    String? favoriteClub,
+    String? interests,
   });
 
   Future<Map<String, dynamic>> login({
@@ -41,6 +43,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     String? phoneNumber,
     required String password,
     required String username,
+    String? favoriteClub,
+    String? interests,
   }) async {
     final response = await apiClient.dio.post(
       'auth/register',
@@ -49,6 +53,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         if (phoneNumber != null) 'phoneNumber': phoneNumber,
         'password': password,
         'username': username,
+        if (favoriteClub != null) 'favoriteClub': favoriteClub,
+        if (interests != null) 'interests': interests,
       },
     );
 

@@ -16,16 +16,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   final List<Map<String, String>> _slides = [
     {
-      'title': 'أهلاً بك في فانتكورا',
-      'description': 'المنصة التفاعلية الأولى لعشاق الكرة الفانتازي والتوقعات الرياضية.',
+      'title': 'تابع كل مباراة ⚽',
+      'description': 'نتائج فورية، إحصائيات، وتعليق مباشر لجميع الدوريات حول العالم.',
     },
     {
-      'title': 'ساحة التوقعات المباشرة',
-      'description': 'توقع نتائج المباريات الكبرى، واجمع النقاط لتنافس على صدارة الترتيب العام.',
+      'title': 'انضم للمجتمع 👥',
+      'description': 'تواصل مع ملايين المشجعين، شارك أفكارك، وانضم لغرف الصوت الفورية.',
     },
     {
-      'title': 'شكّل فريق أحلامك',
-      'description': 'اشترِ اللاعبين، ودر تشكيلتك، ونافس أصدقائك في دوريات خاصة ومثيرة.',
+      'title': 'توقع واربح 🏆',
+      'description': 'اختبر معلوماتك الرياضية، اربح XP وشارات متفردة، واصعد قائمة المتصدرين.',
+    },
+    {
+      'title': 'عالم كرة القدم الخاص بك 🌟',
+      'description': 'فانتازي، بث مباشر، غرف صوتية، والمزيد — كل هذا في تطبيق واحد.',
     },
   ];
 
@@ -42,8 +46,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
         curve: Curves.easeInOut,
       );
     } else {
-      // Go to main app
-      context.go('/home');
+      // Go to interests page for registration setup
+      context.go('/onboarding/interests?mode=register');
     }
   }
 
@@ -63,7 +67,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: TextButton(
-                  onPressed: () => context.go('/home'),
+                  onPressed: () => context.go('/onboarding/interests?mode=register'),
                   child: Text(
                     'تخطي',
                     style: AppTextStyles.bodyMedium.bold.copyWith(color: AppColors.primary),
@@ -94,10 +98,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           ),
                           child: Icon(
                             index == 0
-                                ? Icons.sports_soccer
+                                ? Icons.live_tv
                                 : index == 1
-                                    ? Icons.analytics_outlined
-                                    : Icons.group_work_outlined,
+                                    ? Icons.forum
+                                    : index == 2
+                                        ? Icons.insights
+                                        : Icons.sports_soccer,
                             size: 100,
                             color: AppColors.primary,
                           ),

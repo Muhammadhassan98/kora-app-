@@ -8,6 +8,8 @@ abstract class AuthRepository {
     String? phoneNumber,
     required String password,
     required String username,
+    String? favoriteClub,
+    String? interests,
   });
 
   Future<Either<Failure, UserEntity>> login({

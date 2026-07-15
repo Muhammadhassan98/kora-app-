@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fantkora/core/theme/app_colors.dart';
 import 'package:fantkora/core/theme/app_text_styles.dart';
 import 'package:fantkora/core/di/injection.dart';
+import 'package:fantkora/core/storage/local_storage.dart';
 import '../bloc/matches_bloc.dart';
 import '../bloc/matches_event.dart';
 import '../bloc/matches_state.dart';
@@ -20,11 +22,23 @@ class LivePage extends StatefulWidget {
 
 class _LivePageState extends State<LivePage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool _isGuest = false;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _checkGuestStatus();
+  }
+
+  Future<void> _checkGuestStatus() async {
+    final localStorage = LocalStorage();
+    final guest = await localStorage.read<bool>('settings', 'is_guest') ?? false;
+    if (mounted) {
+      setState(() {
+        _isGuest = guest;
+      });
+    }
   }
 
   @override
@@ -289,6 +303,38 @@ class _LivePageState extends State<LivePage> with SingleTickerProviderStateMixin
   }
 
   void _showPredictionDialog(BuildContext context, MatchEntity match) {
+    if (_isGuest) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          final isDark = Theme.of(context).brightness == Brightness.dark;
+          return AlertDialog(
+            backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
+            title: const Text('عذراً، هذه الميزة للمسجلين ⚽', textAlign: TextAlign.right),
+            content: const Text(
+              'لتوقع نتائج المباريات والحصول على نقاط وصعود قائمة المتصدرين، يرجى إنشاء حسابك.',
+              textAlign: TextAlign.right,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('تصفح لاحقاً', style: TextStyle(color: Colors.grey)),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  context.go('/login');
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+                child: const Text('سجل الآن', style: TextStyle(color: Colors.white)),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
     int homeScore = 0;
     int awayScore = 0;
 

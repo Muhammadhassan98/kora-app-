@@ -50,6 +50,8 @@ export class AuthService {
         data: {
           userId: createdUser.id,
           username: dto.username,
+          favoriteClub: dto.favoriteClub || null,
+          interests: dto.interests || null,
         },
       });
 

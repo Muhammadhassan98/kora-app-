@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fantkora/main.dart';
@@ -16,7 +18,10 @@ class MockAuthBloc extends Bloc<AuthEvent, AuthState> implements AuthBloc {
 }
 
 void main() {
-  setUpAll(() {
+  setUpAll(() async {
+    final tempDir = Directory.systemTemp.createTempSync();
+    Hive.init(tempDir.path);
+
     // Register MockAuthBloc inside getIt to satisfy the dependency in LoginPage
     getIt.registerLazySingleton<AuthBloc>(() => MockAuthBloc());
   });

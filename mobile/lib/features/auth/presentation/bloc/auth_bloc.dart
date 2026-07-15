@@ -19,16 +19,20 @@ class AuthRegisterEvent extends AuthEvent {
   final String? phoneNumber;
   final String password;
   final String username;
+  final String? favoriteClub;
+  final String? interests;
 
   const AuthRegisterEvent({
     this.email,
     this.phoneNumber,
     required this.password,
     required this.username,
+    this.favoriteClub,
+    this.interests,
   });
 
   @override
-  List<Object?> get props => [email, phoneNumber, password, username];
+  List<Object?> get props => [email, phoneNumber, password, username, favoriteClub, interests];
 }
 
 class AuthLoginEvent extends AuthEvent {
@@ -138,6 +142,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       phoneNumber: event.phoneNumber,
       password: event.password,
       username: event.username,
+      favoriteClub: event.favoriteClub,
+      interests: event.interests,
     );
     result.fold(
       (failure) => emit(AuthFailureState(failure.message)),

@@ -248,7 +248,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 24.0),
 
-                          // Toggle Sign Up
+                           // Toggle Sign Up
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -268,6 +268,19 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                             ],
+                          ),
+                          const SizedBox(height: 16.0),
+                          Center(
+                            child: TextButton(
+                              onPressed: () => context.go('/onboarding/interests?mode=guest'),
+                              child: Text(
+                                'تصفح التطبيق كضيف',
+                                style: AppTextStyles.bodyMedium.bold.copyWith(
+                                  color: AppColors.primary,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),

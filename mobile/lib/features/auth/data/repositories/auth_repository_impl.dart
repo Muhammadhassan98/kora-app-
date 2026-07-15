@@ -19,6 +19,8 @@ class AuthRepositoryImpl implements AuthRepository {
     String? phoneNumber,
     required String password,
     required String username,
+    String? favoriteClub,
+    String? interests,
   }) async {
     try {
       final user = await remoteDataSource.register(
@@ -26,6 +28,8 @@ class AuthRepositoryImpl implements AuthRepository {
         phoneNumber: phoneNumber,
         password: password,
         username: username,
+        favoriteClub: favoriteClub,
+        interests: interests,
       );
       return Right(user);
     } on DioException catch (e) {

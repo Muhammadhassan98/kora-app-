@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:fantkora/core/theme/app_colors.dart';
 import 'package:fantkora/core/theme/app_text_styles.dart';
 import 'package:fantkora/core/di/injection.dart';
+import 'package:fantkora/core/storage/local_storage.dart';
 import '../bloc/auth_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -28,15 +29,23 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-  void _submitRegister(BuildContext context) {
+  void _submitRegister(BuildContext context) async {
     if (_formKey.currentState?.validate() ?? false) {
-      context.read<AuthBloc>().add(
-            AuthRegisterEvent(
-              username: _usernameController.text.trim(),
-              email: _emailController.text.trim(),
-              password: _passwordController.text,
-            ),
-          );
+      final localStorage = LocalStorage();
+      final favClub = await localStorage.read<String>('settings', 'favorite_club');
+      final interests = await localStorage.read<String>('settings', 'interests');
+
+      if (context.mounted) {
+        context.read<AuthBloc>().add(
+              AuthRegisterEvent(
+                username: _usernameController.text.trim(),
+                email: _emailController.text.trim(),
+                password: _passwordController.text,
+                favoriteClub: favClub,
+                interests: interests,
+              ),
+            );
+      }
     }
   }
 

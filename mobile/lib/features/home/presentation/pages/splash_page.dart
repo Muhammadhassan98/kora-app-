@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:fantkora/core/storage/local_storage.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Navigate to Auth after a delay
-    Future.delayed(const Duration(seconds: 2), () {
+    // Navigate after checking local storage session
+    Future.delayed(const Duration(seconds: 2), () async {
+      final localStorage = LocalStorage();
+      final token = await localStorage.read<String>('auth', 'token');
+      final isGuest = await localStorage.read<bool>('settings', 'is_guest');
+
       if (context.mounted) {
-        context.go('/login');
+        if (token != null || isGuest == true) {
+          context.go('/home');
+        } else {
+          context.go('/login');
+        }
       }
     });
 
