@@ -1,84 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyles {
-  static const String fontName = 'Inter';
-
   // Display Styles
-  static TextStyle displayLarge = TextStyle(
-    fontFamily: fontName,
+  static TextStyle displayLarge = GoogleFonts.rubik(
     fontSize: 48.0,
     fontWeight: FontWeight.bold,
     height: 56.0 / 48.0,
   );
 
-  static TextStyle displayMedium = TextStyle(
-    fontFamily: fontName,
+  static TextStyle displayMedium = GoogleFonts.rubik(
     fontSize: 36.0,
     fontWeight: FontWeight.bold,
     height: 44.0 / 36.0,
   );
 
   // Heading Styles
-  static TextStyle headingH1 = TextStyle(
-    fontFamily: fontName,
+  static TextStyle headingH1 = GoogleFonts.rubik(
     fontSize: 24.0,
     fontWeight: FontWeight.bold,
     height: 32.0 / 24.0,
   );
 
-  static TextStyle headingH2 = TextStyle(
-    fontFamily: fontName,
+  static TextStyle headingH2 = GoogleFonts.rubik(
     fontSize: 20.0,
     fontWeight: FontWeight.bold,
     height: 28.0 / 20.0,
   );
 
-  static TextStyle headingH3 = TextStyle(
-    fontFamily: fontName,
+  static TextStyle headingH3 = GoogleFonts.rubik(
     fontSize: 18.0,
     fontWeight: FontWeight.bold,
     height: 26.0 / 18.0,
   );
 
-  static TextStyle headingH4 = TextStyle(
-    fontFamily: fontName,
+  static TextStyle headingH4 = GoogleFonts.rubik(
     fontSize: 16.0,
     fontWeight: FontWeight.bold,
     height: 24.0 / 16.0,
   );
 
   // Body Styles
-  static TextStyle bodyLarge = TextStyle(
-    fontFamily: fontName,
+  static TextStyle bodyLarge = GoogleFonts.rubik(
     fontSize: 16.0,
     fontWeight: FontWeight.normal,
     height: 24.0 / 16.0,
   );
 
-  static TextStyle bodyMedium = TextStyle(
-    fontFamily: fontName,
+  static TextStyle bodyMedium = GoogleFonts.rubik(
     fontSize: 14.0,
     fontWeight: FontWeight.normal,
     height: 22.0 / 14.0,
   );
 
-  static TextStyle bodySmall = TextStyle(
-    fontFamily: fontName,
+  static TextStyle bodySmall = GoogleFonts.rubik(
     fontSize: 12.0,
     fontWeight: FontWeight.normal,
     height: 20.0 / 12.0,
   );
 
   // Label & Metrics
-  static TextStyle labelMedium = TextStyle(
-    fontFamily: fontName,
+  static TextStyle labelMedium = GoogleFonts.rubik(
     fontSize: 12.0,
     fontWeight: FontWeight.w500,
     height: 20.0 / 12.0,
   );
 
-  static TextStyle metricsLarge = TextStyle(
-    fontFamily: fontName,
+  static TextStyle metricsLarge = GoogleFonts.rubik(
     fontSize: 28.0,
     fontWeight: FontWeight.bold,
     height: 36.0 / 28.0,
