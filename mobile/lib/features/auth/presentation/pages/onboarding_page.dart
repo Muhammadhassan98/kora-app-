@@ -61,7 +61,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             children: [
               // Skip button
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 child: TextButton(
                   onPressed: () => context.go('/home'),
                   child: Text(
